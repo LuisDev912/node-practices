@@ -11,8 +11,8 @@ const port = process.env.PORT ?? 'not defined';
 
 // --- functions
 function formatMem(memory){
-    const gb = memory / 1024 / 1024 / 1024;
-    return `${gb.toFixed(2)} gb`
+    const GB = memory / 1024 / 1024 / 1024;
+    return `${GB.toFixed(2)} GB`
 }
 
 function formatTime(time){
@@ -21,28 +21,28 @@ function formatTime(time){
     const s = Math.floor(time % 60)
 
     return `${h}h ${m}m ${s}s`
-}; // this can also be done with the 'ms' library from Vercel
+}; // this can also be done with the 'ms' library from Vercel. I'm not using it because the purpose isn't using external libraries
 
 // --- logs
 console.group(' --- OS information: --- ');
 console.log(`Type of OS: ${os.type()} (${os.arch()})`);
 console.log(`Type of platform: ${os.platform()}`);
+console.log(`Your PC current version is: ${os.version()}`);
 
 console.log(`Total memory: ${formatMem(os.totalmem())}. And free memory: ${formatMem(os.freemem())}`);
 
 console.log(`System active time: ${formatTime(os.uptime())}`);
 
 console.log(`Your home dir is: ${os.homedir()}`);
-console.log(`Your PC current version is: ${os.version()}`);
 console.groupEnd();
+// other methods: os.endianness, os.EOL, etc.
 
 // -------------
 
 console.group(' --- Other information: ---');
 console.log(`Execution mode: ${mode}`);
 console.log(`PORT: ${port}`);
-console.log(`Node uptime: ${process.uptime().toFixed(2)}`)
+console.log(`Node uptime: ${process.uptime().toFixed(2)}s`)
+// I don't use the function formatTime() for this because it will only show: 0h 0m 0s
 
 console.groupEnd();
-
-// other methods: os.endianness, os.EOL, etc.
