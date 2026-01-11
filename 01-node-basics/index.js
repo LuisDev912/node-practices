@@ -10,9 +10,12 @@ function formatMem(memory){
     return `${gb.toFixed(2)} gb`
 }
 
-function formatTime(seconds){
-    const h = seconds / 3600;
-    return `${h.toFixed(2)} h`
+function formatTime(time){
+    const h = Math.floor(time / 3600);
+    const m = Math.floor((time % 3600) / 60);
+    const s = Math.floor(time % 60)
+
+    return `${h}h ${m}m ${s}s`
 }; // this can also be done with the 'ms' library from Vercel
 
 console.group(' --- OS information: --- ');
