@@ -10,13 +10,19 @@ function formatMem(memory){
     return `${gb.toFixed(2)} gb`
 }
 
+function formatTime(seconds){
+    const h = seconds / 3600;
+    return `${h.toFixed(2)} h`
+}; // this can also be done with the 'ms' library from Vercel
+
 console.group(' --- OS information: --- ');
 console.log(`Type of OS: ${os.type()} (${os.arch()})`);
 console.log(`Type of platform: ${os.platform()}`);
 
 console.log(`Total memory: ${formatMem(os.totalmem())}. And free memory: ${formatMem(os.freemem())}`);
 
-console.log(`System active time: ${os.uptime()}`);
+console.log(`System active time: ${formatTime(os.uptime())}`);
+
 console.log(`Your home dir is: ${os.homedir()}`);
 console.log(`Your PC current version is: ${os.version()}`);
 console.groupEnd();
