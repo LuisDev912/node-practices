@@ -14,10 +14,15 @@ content = await readFile(mode, 'utf-8')
 
 // --- functions
 
-async function createDir(){
+async function createDir(file){
     const outputDir = join('output', 'files');
-    await mkdir(outputDir, { recursive: true })
+    await mkdir(outputDir, { recursive: true });
+
+    const uppercaseContent = content.toUpperCase()
+    const outputFilePath = join(outputDir, 'uppercase-file.txt')
+
+    await writeFile(outputFilePath, uppercaseContent)
+    console.log(`File in uppercase created successfully. Check ${outputDir} to see your file`)
 }
 
-console.log(content);
-createDir();
+createDir(content);
