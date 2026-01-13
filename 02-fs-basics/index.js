@@ -11,7 +11,7 @@ const mode = process.argv[2] ?? 'example.txt';
 let content;
 
 content = await readFile(mode, 'utf-8');
-console.log(content);
+console.log(`${content} \n`);
 
 // --- functions
 
@@ -20,17 +20,21 @@ function showFileInformation(file){
     console.log(`Your file extension is: ${extname(file)}`)
 }
 
+async function fileToUppercase(file, dir){
+    const uppercaseContent = file.toUpperCase();
+    const outputFilePath = join(dir, 'uppercase-file.txt');
+
+    await writeFile(outputFilePath, uppercaseContent);
+
+    console.log(`File in uppercase created successfully. Check _${dir}_ to see your file`);
+    showFileInformation(outputFilePath);
+}
+
 async function createDir(){
     const outputDir = join('output', 'files');
     await mkdir(outputDir, { recursive: true });
 
-    const uppercaseContent = content.toUpperCase();
-    const outputFilePath = join(outputDir, 'uppercase-file.txt');
-
-    await writeFile(outputFilePath, uppercaseContent);
-
-    console.log(`File in uppercase created successfully. Check ${outputDir} to see your file`);
-    showFileInformation(outputFilePath)
+    fileToUppercase(content, outputDir);
 }
 
 createDir(content);
