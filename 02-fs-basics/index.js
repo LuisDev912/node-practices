@@ -10,9 +10,6 @@ import { join, extname, basename } from "node:path";
 const mode = process.argv[2] ?? 'example.txt';
 let content;
 
-content = await readFile(mode, 'utf-8');
-console.log(`${content} \n`);
-
 // --- functions
 
 function showFileInformation(file){
@@ -20,7 +17,7 @@ function showFileInformation(file){
     console.log(`Your file extension is: ${extname(file)}`)
 }
 
-async function fileToUppercase(file, dir){
+async function contentToUppercase(file, dir){
     const uppercaseContent = file.toUpperCase();
     const outputFilePath = join(dir, 'uppercase-file.txt');
 
@@ -34,7 +31,13 @@ async function createDir(){
     const outputDir = join('output', 'files');
     await mkdir(outputDir, { recursive: true });
 
-    fileToUppercase(content, outputDir);
+    contentToUppercase(content, outputDir);
 }
 
-createDir(content);
+try {
+    content = await readFile(mode, 'utf-8');
+    console.log(`${content} \n`);
+    await createDir();
+} catch (e) {
+    console.error(`error with the file: ${e.message}`)
+}
