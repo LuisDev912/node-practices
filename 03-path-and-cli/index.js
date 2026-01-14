@@ -6,5 +6,7 @@ import { join, extname, basename, resolve } from "node:path";
 /* code */
 
 // --- variables
-const route = process.argv[2] ?? '.';
-console.log(`selected path: ${route}`)
+const relativePath = process.argv[2] ?? '.';
+const absolutePath = resolve(relativePath);
+
+console.log(`selected path: ${join(absolutePath)}`)
