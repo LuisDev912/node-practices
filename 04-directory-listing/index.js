@@ -1,4 +1,4 @@
-/* Path Inspector CLI */ 
+/* Directory Listing */ 
 
 /* imports */
 import { extname, basename, join } from "node:path";
@@ -22,12 +22,20 @@ function formatMem(bytes) {
 }
 
 function render(entries) {
-    for (const entry of entries) {
-        const icon = entry.isDir ? '📁' : '📄';
-        const size = entry.isDir ? '-' : `${entry.size}`
+    console.group('---- DIRECTORY INFORMATION ----');
+    let files = 0;
+    let dirs = 0;
 
-        console.log(`${icon}  ${entry.name}  ${size}`)
+    for (const entry of entries) {
+        entry.isDir ? dirs++ : files++;
+        const fileIcon = entry.isDir ? '📁': '📄';
+        const fileSize = entry.isDir ? '-' : `${entry.size}`
+
+        console.log(`${fileIcon} ${entry.name.padEnd(20)}  ${fileSize}`)
     };
+
+    console.log(`Total files: ${files}. Total directories: ${dirs}`)
+    console.groupEnd();
 }
 
 async function dirEntries() {
