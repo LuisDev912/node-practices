@@ -13,7 +13,7 @@ Then, it shows information like the selected path, the resolved path, the parent
 
 ## Note:
 
-If no path providen, the script will use the current directory. The script also tells if there is a extension name detected.
+If no path provided, the script will use the current directory. The script also tells if there is a extension name detected.
 
 ## Usage
 
