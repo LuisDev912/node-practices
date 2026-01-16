@@ -35,7 +35,12 @@ async function main(){
             })
         );
 
-        console.log(entries)
+        for (const entry of entries) {
+            const icon = entry.isDir ? '📁' : '📄';
+            const size = entry.isDir ? '-' : `${entry.size}`
+
+            console.log(`${icon}  ${entry.name}  ${size}`)
+        };
     } catch (e) {
         console.log(`An error has occurred: ${e.message}`);
         process.exit(1);
