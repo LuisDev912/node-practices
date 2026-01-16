@@ -1,19 +1,14 @@
 /* Directory Listing */ 
 
 /* imports */
-import { extname, basename, join } from "node:path";
+import { join } from "node:path";
 import { readdir, stat } from 'node:fs/promises';
 
 /* code */
 
-// --- variables
-const path = process.argv[2] ?? './';
-const files = await readdir(path);
-
 // --- functions
-function formatMem(bytes) {
+function formatBytes(bytes) {
     if (bytes === 0) return '0 B'
-
     const k = 1024
     const sizes = ['B', 'KB', 'MB', 'GB']
     const i = Math.floor(Math.log(bytes) / Math.log(k))
@@ -38,7 +33,7 @@ function render(entries) {
     console.groupEnd();
 }
 
-async function dirEntries() {
+async function dirEntries(path, files) {
     const entries = await Promise.all(
         files.map(async (name) => {
             const fullPath = join(path, name);
@@ -47,22 +42,27 @@ async function dirEntries() {
             return {
                 name,
                 isDir: stats.isDirectory(),
-                size: formatMem(stats.size)
+                size: formatBytes(stats.size)
             }
         })
     );
-
     render(entries)
 }
 
 async function main(){
     try {
+        // --- variables
+        const path = process.argv[2] ?? './';
+        const files = await readdir(path);
+
         if(!process.argv[2]){
             console.log('No path or file selected. Using current directory (./)');
         };
-        dirEntries();
+
+        await dirEntries(path, files);
     } catch (e) {
-        console.log(`An error has occurred: ${e.message}`);
+        console.error('failed to list directory');
+        console.error(e.message)
         process.exit(1);
     }
 }
