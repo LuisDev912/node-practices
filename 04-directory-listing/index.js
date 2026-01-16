@@ -11,9 +11,14 @@ const path = process.argv[2] ?? './';
 const files = await readdir(path);
 
 // --- functions
-function formatMem(memory){
-    const MB = memory / 1024 / 1024;
-    return `${MB.toFixed(2)} MB`;
+function formatMem(bytes) {
+    if (bytes === 0) return '0 B'
+
+    const k = 1024
+    const sizes = ['B', 'KB', 'MB', 'GB']
+    const i = Math.floor(Math.log(bytes) / Math.log(k))
+
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i]
 }
 
 async function main(){
