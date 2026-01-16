@@ -13,27 +13,32 @@ const files = await readdir(path);
 // --- functions
 function formatMem(memory){
     const MB = memory / 1024 / 1024;
-    return `${MB.toFixed(2)} MB`
+    return `${MB.toFixed(2)} MB`;
 }
 
 async function main(){
-    
     try {
         if(!process.argv[2]){
             console.log('No path or file selected. Using current directory (./)');
         };
 
-        const stats = await stat(path);
+        const entries = await Promise.all(
+            files.map(async (name) => {
+                const fullPath = join(path, name);
+                const stats = await stat(fullPath);
 
-        console.log(`path selected: ${path}, its files: ${files}`);
-        
-        if (stats.isFile()) {
-            console.log(`the size of the file is: ${formatMem(stats.size)}`);
-        }
+                return {
+                    name,
+                    isDir: stats.isDirectory(),
+                    size: formatMem(stats.size)
+                }
+            })
+        );
 
+        console.log(entries)
     } catch (e) {
-        console.log(`An error has ocurred: ${e.message}`);
-        process.exit(1)
+        console.log(`An error has occurred: ${e.message}`);
+        process.exit(1);
     }
 }
 
