@@ -6,7 +6,8 @@ import { createServer } from 'node:http';
 /* code */
 
 // --- variables
-const port = process.env.PORT ?? 3000;
+process.loadEnvFile?.();
+const port = process.env.port ?? 3000;
 
 // --- server
 const server = createServer((req, res) => {
