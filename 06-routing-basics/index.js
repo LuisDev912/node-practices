@@ -15,11 +15,9 @@ const port = process.env.port ?? 3000;
 const server = createServer((req, res) => {
     const { method, url } = req;
     const methodRoutes = routes[method];
-
-    if (!methodRoutes) return methodNotAllowed(req, res);
-
     const handler = methodRoutes[url];
 
+    if (!methodRoutes) return methodNotAllowed(req, res);
     if (!handler) return notFound(req, res);
 
     handler(req, res)
