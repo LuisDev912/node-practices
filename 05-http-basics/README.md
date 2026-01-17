@@ -1,6 +1,6 @@
 # 05-http-basics
 
-This practice is a **Command Line Interface (CLI)**.
+This practice is a **basic HTTP server**.
 
 ## Usage
 

@@ -26,8 +26,10 @@ const server = createServer(async (req, res) => {
         }
 
         if (url === '/health') {
-            return plainToJSON(res, 200, { status: 'ok'})
+            return plainToJSON(res, 200, { status: 'ok', uptime: process.uptime()})
         }
+    } else {
+        return plainToJSON(res, 405, { status: 'method not allowed' })
     }
 
     return plainToJSON(res, 404, { status: 'Not found' });
