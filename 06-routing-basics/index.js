@@ -2,6 +2,8 @@
 
 /* imports */
 import { createServer } from 'node:http';
+import { routes } from './routes.js';
+import { notFound, methodNotAllowed } from './handlers.js';
 
 /* code */
 
@@ -11,8 +13,16 @@ const port = process.env.port ?? 3000;
 
 // --- server
 const server = createServer((req, res) => {
-    res.setHeader('Content-Type', 'text/plain; charset=utf-8')
-    return res.end('hello world from Node');
+    const { method, url } = req;
+    const methodRoutes = routes[method];
+
+    if (!methodRoutes) return methodNotAllowed(req, res);
+
+    const handler = methodRoutes[url];
+
+    if (!handler) return notFound(req, res);
+
+    handler(req, res)
 });
 
 server.listen(port, () => {
