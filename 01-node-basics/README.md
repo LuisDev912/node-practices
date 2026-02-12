@@ -9,5 +9,10 @@ A full restart is required to reset the uptime.
 
 ## Usage
 
-`node index.js`
-`node index.js firstArgument`
+``` bash
+node index.js
+```
+or you can also add an argument:
+``` bash
+node index.js argument
+```
