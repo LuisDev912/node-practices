@@ -7,11 +7,15 @@ This project also focuses on the **Single Responsibility Principle (SRP)** by ha
 
 - `handlers.js`: contains the content to return in each case wether as JSON or plain text.
 
+---
+
 ## Concepts practiced
 
 - Work with `.env` files
 - Apply the Single Responsibility Principle by separating routing and handlers
 - Work with routing
+
+---
 
 ## Usage
 
